@@ -8,7 +8,7 @@ spring:
     active: dev
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/guli
+    url: jdbc:mysql://localhost:3306/guli?characterEncoding=UTF-8
     username: root
     password: root
   jackson:
