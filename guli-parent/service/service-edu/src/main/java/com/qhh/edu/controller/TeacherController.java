@@ -2,6 +2,7 @@ package com.qhh.edu.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qhh.base.exceptionHandler.GuliException;
 import com.qhh.edu.entity.Teacher;
 import com.qhh.edu.entity.vo.TeacherQuery;
 import com.qhh.edu.service.TeacherService;
@@ -34,6 +35,11 @@ public class TeacherController {
     @ApiOperation(value = "获取所有讲师")
     public R findAllTeacher(){
         List<Teacher> teacherList = teacherService.list(null);
+        try {
+            int i = 10 / 0;
+        }catch (ArithmeticException e){
+            throw new GuliException(50001, "执行了自定义异常处理");
+        }
         return R.ok().data("items", teacherList);
     }
 
