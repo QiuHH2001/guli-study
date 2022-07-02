@@ -94,6 +94,9 @@ public class TeacherController {
             wrapper.le("gmt_modified",end);
         }
 
+//        排序
+        wrapper.orderByDesc("gmt_create");
+
         teacherService.page(page, wrapper);
         long total = page.getTotal();
         List<Teacher> records = page.getRecords();
