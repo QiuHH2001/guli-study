@@ -1,0 +1,16 @@
+server:
+  port: 8002
+
+spring:
+  application:
+    name: service-oss
+  profiles:
+    active: dev
+
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-hangzhou.aliyuncs.com
+      keyid: LTAI5tDrAd9wJMRSMQFuXykG
+      keysecret: mMgK0PQW8lEhHzBJJJP3nDfNyXVQ8Z
+      bucketname: qhh-guli
