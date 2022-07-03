@@ -8,7 +8,7 @@
         <el-input-number
           v-model="teacher.sort"
           controls-position="right"
-          min="0"
+          :min="0"
         />
       </el-form-item>
       <el-form-item label="讲师头衔">
@@ -25,6 +25,37 @@
       </el-form-item>
 
       <!-- 讲师头像：TODO -->
+      <!-- 讲师头像 -->
+      <el-form-item label="讲师头像">
+        <!-- 头衔缩略图 -->
+        <pan-thumb :image="String(teacher.avatar)" />
+        <!-- 文件上传按钮 -->
+        <el-button
+          type="primary"
+          icon="el-icon-upload"
+          @click="imagecropperShow = true"
+          >更换头像
+        </el-button>
+
+        <!--
+      v-show：是否显示上传组件
+      :key：类似于id，如果一个页面多个图片上传控件，可以做区分
+      :url：后台上传的url地址
+      @close：关闭上传组件
+      @crop-upload-success：上传成功后的回调
+        <input type="file" name="file"/>
+      -->
+        <image-cropper
+          v-show="imagecropperShow"
+          :width="300"
+          :height="300"
+          :key="imagecropperKey"
+          :url="BASE_API + '/eduoss/file/'"
+          field="file"
+          @close="close"
+          @crop-upload-success="cropSuccess"
+        />
+      </el-form-item>
 
       <el-form-item>
         <el-button
@@ -40,45 +71,60 @@
 
 <script>
 import teacherApi from "../../../api/teacher/teacher";
+import ImageCropper from "../../../components/ImageCropper";
+import PanThumb from "../../../components/PanThumb";
 
 export default {
+  components: {ImageCropper, PanThumb},
   data() {
     return {
       teacher: {},
+      imagecropperShow: false,
+      imagecropperKey: 0,
+      BASE_API: process.env.BASE_API,
+      saveBtnDisabled: false
     };
   },
   created() {
-    this.init()
+    this.init();
   },
   // 监听
   watch: {
-    $route(to, from) { //路由发生变化，方法就会执行
-      this.init()
-    }
+    $route(to, from) {
+      //路由发生变化，方法就会执行
+      this.init();
+    },
   },
   methods: {
-    init(){
-      if(this.$route.params && this.$route.params.id){
-        const id = this.$route.params.id
-        this.getInfo(id)
+    close(){ //关闭上传弹框
+      this.imagecropperShow = false
+      this.imagecropperKey = this.imagecropperKey + 1
+    },
+    cropSuccess(data){ //上传成功的方法
+      this.imagecropperShow = false
+      this.teacher.avatar = data.url
+    },
+    init() {
+      if (this.$route.params && this.$route.params.id) {
+        const id = this.$route.params.id;
+        this.getInfo(id);
       } else {
-      // 清空表单
-        this.teacher = {}
-    }
+        // 清空表单
+        this.teacher = {};
+      }
     },
     // 根据讲师ID获取信息
-    getInfo(id){
-      teacherApi.getTeacherInfo(id)
-      .then(response => {
-        this.teacher = response.data.teacher
-      })
+    getInfo(id) {
+      teacherApi.getTeacherInfo(id).then((response) => {
+        this.teacher = response.data.teacher;
+      });
     },
     saveOrUpdate() {
       // 判断是修改还是添加
-      if(!this.teacher.id){
-        this.saveTeacher()
+      if (!this.teacher.id) {
+        this.saveTeacher();
       } else {
-        this.updateTeacher()
+        this.updateTeacher();
       }
     },
     saveTeacher() {
@@ -91,17 +137,16 @@ export default {
         this.$router.push({ path: "/teacher/table" });
       });
     },
-    updateTeacher(){
-      teacherApi.updateTeacher(this.teacher)
-      .then(response => {
+    updateTeacher() {
+      teacherApi.updateTeacher(this.teacher).then((response) => {
         this.$message({
           type: "success",
           message: "修改成功!",
         });
         //回到列表页面 路由跳转
         this.$router.push({ path: "/teacher/table" });
-      })
-    }
+      });
+    },
   },
 };
 </script>
