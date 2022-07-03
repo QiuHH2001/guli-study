@@ -4,7 +4,7 @@ export default {
     // 展示讲师
     getTeacherListPage(current, limit, teacherQuery) {
         return request({
-            url: `/edu/teacher/pageTeacherCondition/${current}/${limit}`,
+            url: `/eduservice/teacher/pageTeacherCondition/${current}/${limit}`,
             method: 'post',
             data: teacherQuery
         })
@@ -12,26 +12,26 @@ export default {
     // 删除讲师
     deleteTeacherId(id) {
         return request({
-            url: `/edu/teacher/${id}`,
+            url: `/eduservice/teacher/${id}`,
             method: 'delete'
         })
     },
     addTeacher(teacher) {
         return request({
-            url: `/edu/teacher/addTeacher`,
+            url: `/eduservice/teacher/addTeacher`,
             method: 'post',
             data: teacher
         })
     },
     getTeacherInfo(id) {
         return request({
-            url: `/edu/teacher/getTeacher/${id}`,
+            url: `/eduservice/teacher/getTeacher/${id}`,
             method: 'get'
         })
     },
     updateTeacher(teacher) {
         return request({
-            url: `/edu/teacher/updateTeacher`,
+            url: `/eduservice/teacher/updateTeacher`,
             method: 'post',
             data: teacher
         })

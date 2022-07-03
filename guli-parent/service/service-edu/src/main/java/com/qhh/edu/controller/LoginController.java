@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
  * @Description: TODO
  */
 @RestController
-@RequestMapping("/service/user")
+@RequestMapping("/eduservice/user")
 @CrossOrigin
 public class LoginController {
 

@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @Description: TODO
  */
 @RestController
-@RequestMapping("/edu/file")
+@RequestMapping("/eduoss/file")
 @CrossOrigin
 public class OssController {
 
